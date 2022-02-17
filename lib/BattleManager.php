@@ -5,7 +5,7 @@ class BattleManager
     /**
      * Our complex fighting algorithm!
      *
-     * @return array With keys winning_ship, losing_ship & used_jedi_powers
+     * @return BattleResult
      */
     public function battle(Ship $ship1, $ship1Quantity, Ship $ship2, $ship2Quantity)
     {
@@ -35,6 +35,10 @@ class BattleManager
             $ship2Health = $ship2Health - ($ship1->getWeaponPower() * $ship1Quantity);
         }
 
+        // update the strengths on the ships, so we can show this
+        $ship1->setStrength($ship1Health);
+        $ship2->setStrength($ship2Health);
+
         if ($ship1Health <= 0 && $ship2Health <= 0) {
             // they destroyed each other
             $winningShip = null;
@@ -50,11 +54,7 @@ class BattleManager
             $usedJediPowers = $ship1UsedJediPowers;
         }
 
-        return array(
-            'winning_ship' => $winningShip,
-            'losing_ship' => $losingShip,
-            'used_jedi_powers' => $usedJediPowers,
-        );
+        return new BattleResult($winningShip, $losingShip, $usedJediPowers);
     }
 
     private function didJediDestroyShipUsingTheForce(Ship $ship)

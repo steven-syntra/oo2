@@ -68,25 +68,34 @@ $outcome = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Quantity
             <div class="result-box center-block">
                 <h3 class="text-center audiowide">
                     Winner:
-                    <?php if ($outcome['winning_ship']): ?>
-                        <?php echo $outcome['winning_ship']->getName(); ?>
+                    <?php if ( $outcome->IsThereAWinner() ): ?>
+                        <?php echo $outcome->getWinningShip()->getName(); ?>
                     <?php else: ?>
                         Nobody
                     <?php endif; ?>
                 </h3>
                 <p class="text-center">
-                    <?php if ($outcome['winning_ship'] == null): ?>
+                    <?php if (! $outcome->IsThereAWinner()): ?>
                         Both ships destroyed each other in an epic battle to the end.
                     <?php else: ?>
-                        The <?php echo $outcome['winning_ship']->getName(); ?>
-                        <?php if ($outcome['used_jedi_powers']): ?>
+                        The <?php echo $outcome->getWinningShip()->getName(); ?>
+                        <?php if ($outcome->WhereJediPowersUsed()): ?>
                             used its Jedi Powers for a stunning victory!
                         <?php else: ?>
-                            overpowered and destroyed the <?php echo $outcome['losing_ship']->getName() ?>s
+                            overpowered and destroyed the <?php echo $outcome->getLosingShip()->getName() ?>s
                         <?php endif; ?>
                     <?php endif; ?>
                 </p>
             </div>
+
+            <h3>Remaining Strength</h3>
+            <dl class="dl-horizontal">
+                <dt><?php echo $ship1->getName(); ?></dt>
+                <dd><?php echo $ship1->getStrength(); ?></dd>
+                <dt><?php echo $ship2->getName(); ?></dt>
+                <dd><?php echo $ship2->getStrength(); ?></dd>
+            </dl>
+
             <a href="/index.php"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
         
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
