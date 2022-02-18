@@ -2,14 +2,11 @@
 
 class Ship
 {
+    private $id;
     private $name;
-
     private $weaponPower = 0;
-
     private $jediFactor = 0;
-
     private $strength = 0;
-
     private $underRepair;
 
     public function __construct($name)
@@ -17,6 +14,17 @@ class Ship
         $this->name = $name;
         // randomly put this ship under repair
         $this->underRepair = mt_rand(1, 100) < 30;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function isFunctional()
