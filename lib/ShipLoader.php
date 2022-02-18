@@ -10,18 +10,6 @@ class ShipLoader
     }
 
     /**
-     * @return PDO
-     */
-    private function getPDO()
-    {
-        if ($this->pdo === null) {
-            $this->pdo = new PDO($this->dbDsn, $this->dbUser, $this->dbPass);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        return $this->pdo;
-    }
-
-    /**
      * @return Ship[]
      */
     public function getShips(): array
